@@ -1,4 +1,9 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a simple To Do list project to learn Next.js.
+
+## Demo
+![](https://github.com/thiago-tallison/next-todo-list/blob/main/public/images/demo-gif.gif)
+
+****
 
 ## Getting Started
 
