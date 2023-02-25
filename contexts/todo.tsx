@@ -27,12 +27,13 @@ interface TodoProviderProps {
 }
 
 const TodoProvider: FC<TodoProviderProps> = ({ children }) => {
-  const [todos, setTodos] = useState<Todo[]>([])
-  const [loading, setloading] = useState(true)
-
   const sleep = useCallback(async (ms: number) => {
     return await new Promise(resolve => setTimeout(resolve, ms))
   }, [])
+
+  const [loading, setloading] = useState(true)
+
+  const [todos, setTodos] = useState<Todo[]>([])
 
   useEffect(() => {
     async function retrieveTodos() {
@@ -41,10 +42,11 @@ const TodoProvider: FC<TodoProviderProps> = ({ children }) => {
       if (exists) {
         const retrieved = JSON.parse(exists)
 
-        await sleep(2000)
+        await sleep(1000)
 
         setTodos(retrieved as Todo[])
       }
+
       setloading(false)
     }
 
@@ -53,7 +55,6 @@ const TodoProvider: FC<TodoProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (!todos.length) return
-
     localStorage.setItem(TODO_KEY, JSON.stringify(todos))
   }, [todos])
 
@@ -71,6 +72,8 @@ const TodoProvider: FC<TodoProviderProps> = ({ children }) => {
 
   const removeTodo = useCallback(
     (todo: Todo) => {
+      if (todos.length === 1) localStorage.setItem(TODO_KEY, '[]')
+
       const newTodos = todos.filter(({ id }) => id !== todo.id)
 
       setTodos(newTodos)
